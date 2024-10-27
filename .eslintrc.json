@@ -4,6 +4,7 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react-hooks/exhaustive-deps": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
     // Add other rules you want to disable
     "no-console": "off"
   }
