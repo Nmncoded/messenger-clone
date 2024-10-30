@@ -23,8 +23,8 @@ export const POST = async (request: Request) => {
       },
     });
 
-    pusherServer.trigger(updatedUser.email!, "user:update", updatedUser);
-
+    // After updating user data
+    await pusherServer.trigger('users-global', 'users:refresh', updatedUser);
 
 
     return NextResponse.json(updatedUser);

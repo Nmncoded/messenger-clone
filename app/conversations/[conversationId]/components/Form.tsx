@@ -40,7 +40,7 @@ const Form: React.FC<FormProps> = ({ conversation }) => {
   }
   
   const handleUpload = (data:any) => {
-    console.log(data);
+    // console.log(data);
     axios.post('/api/messages',{
       image : data?.info?.secure_url,
       conversationId: conversationId

@@ -20,10 +20,12 @@ const AuthForm = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
+    // console.log("session------------------",session);
     if (session.status === "authenticated") {
       // toast.success('Logged in');
       console.log("Authenticated");
       router.push("/users");
+
     }
   }, [session?.status]);
 
@@ -58,10 +60,17 @@ const AuthForm = () => {
             ...data,
             redirect: false,
           })
+          .then((callback) => {
+            if (callback?.ok && !callback?.error) {
+              setTimeout(() => {
+                window.location.reload();
+              }, 50);
+            }
+          })
           // router.push("/users");
         })
         .catch((error) => {
-          console.log("inside catch");
+          // console.log("inside catch");
           toast.error("Something went wrong");
         })
         .finally(() => {
