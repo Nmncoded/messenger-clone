@@ -5,6 +5,7 @@ import UserBox from './UserBox'
 import { pusherClient } from '@/app/libs/pusher'
 import { useSession } from 'next-auth/react'
 import { find } from 'lodash'
+import { useRouter } from 'next/navigation'
 
 interface UsersListProps {
   initialUsers: User[]
@@ -12,7 +13,7 @@ interface UsersListProps {
 
 const UsersList:React.FC<UsersListProps> = ({initialUsers}) => {
   const [items, setItems] = useState(initialUsers);
-
+  const router = useRouter();
   const session = useSession();
 
   const pusherKey = useMemo(() => {
@@ -32,7 +33,8 @@ const UsersList:React.FC<UsersListProps> = ({initialUsers}) => {
           return current;
         }
         return [user, ...current];
-      })
+      });
+      router.refresh();
     }
 
 
