@@ -1,4 +1,5 @@
 import prisma from "@/app/libs/prismadb";
+import { pusherServer } from "@/app/libs/pusher";
 import bcrypt from "bcrypt";
 import {NextResponse} from 'next/server';
 
@@ -18,6 +19,18 @@ export const POST = async (request: Request) => {
         name,
         hashedPassword,
       },
+    });
+
+    const allUsers = await prisma.user.findMany({
+      where: {
+        NOT: {
+          email
+        }
+      },
+    })
+
+    allUsers.forEach((user) => { 
+      pusherServer.trigger(user.email!, "user:new", user);
     });
   
     return NextResponse.json(user);

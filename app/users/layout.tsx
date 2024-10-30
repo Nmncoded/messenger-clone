@@ -10,7 +10,7 @@ const UsersLayout = async({
   return (
     <Sidebar>
       <div className='h-full' >
-        <UsersList items={users} />
+        <UsersList initialUsers={users} />
         {children}
       </div>
     </Sidebar>
