@@ -1,5 +1,6 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import prisma from "@/app/libs/prismadb";
+import { pusherServer } from "@/app/libs/pusher";
 import {NextResponse} from 'next/server';
 
 export const POST = async (request: Request) => {
@@ -21,6 +22,9 @@ export const POST = async (request: Request) => {
         image
       },
     });
+
+    pusherServer.trigger(updatedUser.email!, "user:update", updatedUser);
+
 
 
     return NextResponse.json(updatedUser);
