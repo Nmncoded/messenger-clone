@@ -13,7 +13,7 @@ export const POST = async (request: Request) => {
     }
     const hashedPassword = await bcrypt.hash(password, 12);
   
-    const user = await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         email,
         name,
@@ -30,10 +30,10 @@ export const POST = async (request: Request) => {
     })
 
     allUsers.forEach((user) => { 
-      pusherServer.trigger(user.email!, "user:new", user);
+      pusherServer.trigger(user.email!, "user:new", newUser);
     });
   
-    return NextResponse.json(user);
+    return NextResponse.json(newUser);
   } catch (error) {
     console.log("REGISTRATION_ERROR",error);
     return new NextResponse("Internal Error", { status: 500 });
